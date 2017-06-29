@@ -46,15 +46,18 @@ $(function () {
 <div class="compute">
 <script type="text/x-sage">
 
-@interact( layout=[ ['f', 'a'], ['u', 'l'], ['x_min', 'x_max', 'y_min', 'y_max'] ])
-def squeeze( f = input_box( default = 2, label = "f(x) = ", width = 20 ), 
-        u = input_box( default = x^2 + 3, label = "u(x) = ", width = 20 ), 
-        l = input_box( default = -x^2 + 1, label = "l(x) = ", width = 20 ), 
+@interact( layout=[ ['func', 'a'], ['u', 'l'], ['x_min', 'x_max', 'y_min', 'y_max'], ['p'] ])
+def squeeze( func = input_box( default = 2, label = "f(x) = ", width = 20 ), 
+        u = input_box( default = x^2 + 2, label = "u(x) = ", width = 20 ), 
+        l = input_box( default = -x^2 + 2, label = "l(x) = ", width = 20 ), 
         a = input_box( default = 0, label = "a", width = 5 ), 
+        p = slider(0, 2, 0.01, default = 0.5, label = "p"),
         x_min = input_box( default = -2, label = "x min", width = 5 ), 
         x_max = input_box( default = 2, label = "x max", width = 5 ), 
         y_min = input_box( default = -2, label = "y min", width = 5 ), 
         y_max = input_box( default = 6, label = "y max", width = 5 ) ):
+    
+    f(x) = func
             
     # Graph f, u, l, and a dashed line at a
     graph_f = plot( f, x, x_min, x_max, ymin = y_min, ymax = y_max, color = 'purple' )
@@ -64,11 +67,11 @@ def squeeze( f = input_box( default = 2, label = "f(x) = ", width = 20 ),
     line_a = line( [(a, y_min), (a, y_max)], linestyle = '--', color = 'black' )
 
     # Check if lim(u) as x>a exists
-    try:
+    if True:
         lim_u = limit( u, x=a )
     
         # Check if lim(l) as x>a exists
-        try:
+        if True:
             lim_l = limit( l, x=a )
         
             # Check if the limits are equal
@@ -76,14 +79,23 @@ def squeeze( f = input_box( default = 2, label = "f(x) = ", width = 20 ),
                 
                 # Check if the limits equal the limit of f
                 if lim_u == limit( f, x=a ):
-                    print "The theorem holds true at this point."
+                    (u_min, prec) = find_local_minimum(u, a-p, a+p)
+                    (f_max, prec) = find_local_maximum(f, a-p, a+p)
+                    (f_min, prec) = find_local_minimum(f, a-p, a+p)
+                    (l_max, prec) = find_local_minimum(l, a-p, a+p)
+                    
+                    if u_min >= f_max and f_min >= l_max:
+                        print "The theorem holds true at this point."
+                        
+                    else:
+                        print "l(x) <= f(x) <= u(x) is not always true for this p, so the theorem fails."                          
                 else:
                     print "The limit of f at a does not equal the other limits, so the theorem fails."     
             else:
                 print "The limits of u and l at a are not equal, so the theorem fails."
-        except:
+        else:
             print "The limit of l at a does not exist, so the theorem fails."
-    except:
+    else:
         print "The limit of u at a does not exist, so the theorem fails."
     
     # Combine graphs and plot them
@@ -94,6 +106,6 @@ def squeeze( f = input_box( default = 2, label = "f(x) = ", width = 20 ),
 </div>
 
 <hr>
-Last modified on June 22nd, 2017.
+Last modified on June 29th, 2017.
 </body>
 </html>
