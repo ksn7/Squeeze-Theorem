@@ -46,10 +46,12 @@ $(function () {
 <div class="compute">
 <script type="text/x-sage">
 
+# p slider - current best option
+
 @interact( layout=[ ['func', 'a'], ['u', 'l'], ['x_min', 'x_max', 'y_min', 'y_max'], ['p'] ])
 def squeeze( func = input_box( default = 2, label = "f(x) = ", width = 20 ), 
-        u = input_box( default = x^2 + 2, label = "u(x) = ", width = 20 ), 
-        l = input_box( default = -x^2 + 2, label = "l(x) = ", width = 20 ), 
+        u = input_box( default = x^2 + 3, label = "u(x) = ", width = 20 ), 
+        l = input_box( default = -x^2 + 1, label = "l(x) = ", width = 20 ), 
         a = input_box( default = 0, label = "a", width = 5 ), 
         p = slider(0, 2, 0.01, default = 0.5, label = "p"),
         x_min = input_box( default = -2, label = "x min", width = 5 ), 
@@ -79,16 +81,65 @@ def squeeze( func = input_box( default = 2, label = "f(x) = ", width = 20 ),
                 
                 # Check if the limits equal the limit of f
                 if lim_u == limit( f, x=a ):
-                    (u_min, prec) = find_local_minimum(u, a-p, a+p)
-                    (f_max, prec) = find_local_maximum(f, a-p, a+p)
-                    (f_min, prec) = find_local_minimum(f, a-p, a+p)
-                    (l_max, prec) = find_local_minimum(l, a-p, a+p)
                     
-                    if u_min >= f_max and f_min >= l_max:
-                        print "The theorem holds true at this point."
+                    # Check if f(x) <= u(x) always true in the p region
+                    options = []
+                    x_start = a - p
+                    x_end = x_start + 0.1
+                    
+                    # Iterate through [a-p, a+p] on u-f to find all roots
+                    while x_end <= a + p :
+                        try:
+                            equal_uf = find_root( u-f, x_start, x_end )
+                            options.append(equal_uf)
+                            x_start = x_end
+                            x_end += 0.1
+                        except:
+                            x_end += 0.1
+                    
+                    # Create variable found_neg - if algorithm finds a negative, prints failure and moves on. If doesn't find negative, prints success.
+                    found_neg = False        
+                    for j in range(len(options)) :
+                        pt = options[j]
+                        try:
+                            find_root( u-f + 10^-12, pt - 0.01, pt + 0.01 )
+                            print "f(x) <= u(x) is not always true for this p, so the theorem fails."
+                            found_neg = True
+                            break
+                        except:
+                            placeholder = True
+                            
+                    # If f(x) <= u(x) held true, then check l(x) <= f(x)    
+                    if not found_neg :
                         
-                    else:
-                        print "l(x) <= f(x) <= u(x) is not always true for this p, so the theorem fails."                          
+                        options2 = []
+                        x_start = a - p
+                        x_end = x_start + 0.1
+                        
+                        # Iterate through [a-p, a+p] on f-l to find all roots
+                        while x_end <= a + p:
+                            try:
+                                equal_fl = find_root( f-l, x_start, x_end )
+                                options2.append(equal_fl)
+                                x_start = x_end
+                                x_end += 0.1
+                            except:
+                                x_end += 0.1
+                                
+                        found_neg = False
+                        for j in range(len(options2)) :
+                            pt = options2[j]
+                            try:
+                                find_root( f-l + 10^-12, pt - 0.01, pt + 0.01 )
+                                print "l(x) <= f(x) is not always true for this p, so the theorem fails."
+                                found_neg = True
+                                break
+                            except:
+                                placeholder = True
+                        
+                        if not found_neg :
+                            print "The theorem holds true at this point."
+                      
                 else:
                     print "The limit of f at a does not equal the other limits, so the theorem fails."     
             else:
@@ -106,6 +157,6 @@ def squeeze( func = input_box( default = 2, label = "f(x) = ", width = 20 ),
 </div>
 
 <hr>
-Last modified on June 29th, 2017.
+Last modified on July 6th, 2017.
 </body>
 </html>
