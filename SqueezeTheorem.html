@@ -49,15 +49,15 @@ $(function () {
 # p slider - current best option
 
 @interact( layout=[ ['func', 'a'], ['u', 'l'], ['x_min', 'x_max', 'y_min', 'y_max'], ['p'] ])
-def squeeze( func = input_box( default = 2, label = "f(x) = ", width = 20 ), 
-        u = input_box( default = x^2 + 3, label = "u(x) = ", width = 20 ), 
-        l = input_box( default = -x^2 + 1, label = "l(x) = ", width = 20 ), 
+def squeeze( func = input_box( default = x^2*sin(1/x), label = "f(x) = ", width = 20 ), 
+        u = input_box( default = x^2, label = "u(x) = ", width = 20 ), 
+        l = input_box( default = -x^2, label = "l(x) = ", width = 20 ), 
         a = input_box( default = 0, label = "a", width = 5 ), 
         p = slider(0, 2, 0.01, default = 0.5, label = "p"),
-        x_min = input_box( default = -2, label = "x min", width = 5 ), 
-        x_max = input_box( default = 2, label = "x max", width = 5 ), 
-        y_min = input_box( default = -2, label = "y min", width = 5 ), 
-        y_max = input_box( default = 6, label = "y max", width = 5 ) ):
+        x_min = input_box( default = -1, label = "x min", width = 5 ), 
+        x_max = input_box( default = 1, label = "x max", width = 5 ), 
+        y_min = input_box( default = -1, label = "y min", width = 5 ), 
+        y_max = input_box( default = 1, label = "y max", width = 5 ) ):
     
     f(x) = func
             
@@ -157,6 +157,6 @@ def squeeze( func = input_box( default = 2, label = "f(x) = ", width = 20 ),
 </div>
 
 <hr>
-Last modified on July 6th, 2017.
+Last modified on July 17th, 2017.
 </body>
 </html>
