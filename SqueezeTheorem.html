@@ -34,7 +34,7 @@ $(function () {
 </script>
 
 <div class="latex">
-    \textrm{This demonstrates the Squeeze Theorem: If for functions f, g, and h and a positive number p, } 
+    \textrm{This demonstrates the Squeeze Theorem: If for functions } f, g, \textrm{ and } h \textrm{ and a positive number } p, 
     \\
     g(x) \leq f(x) \leq h(x) \textrm{ for all } x \textrm{ that satisfy } 0 < |x-a| < p, 
     \\
@@ -131,7 +131,7 @@ def squeeze( func = input_box( default = x^2*sin(1/x), label = "f(x) = ", width 
                             pt = options2[j]
                             try:
                                 find_root( f-l + 10^-12, pt - 0.01, pt + 0.01 )
-                                print "l(x) <= f(x) is not always true for this p, so the theorem fails."
+                                print "l(x) <= f(x) is not always true for this p, so the conditions of the theorem are not met."
                                 found_neg = True
                                 break
                             except:
@@ -141,13 +141,13 @@ def squeeze( func = input_box( default = x^2*sin(1/x), label = "f(x) = ", width 
                             print "The theorem holds true at this point."
                       
                 else:
-                    print "The limit of f at a does not equal the other limits, so the theorem fails."     
+                    print "The limit of f at a does not equal the other limits, so the conditions of the theorem are not met."     
             else:
-                print "The limits of u and l at a are not equal, so the theorem fails."
+                print "The limits of u and l at a are not equal, so the conditions of the theorem are not met."
         else:
-            print "The limit of l at a does not exist, so the theorem fails."
+            print "The limit of l at a does not exist, so the conditions of the theorem are not met."
     else:
-        print "The limit of u at a does not exist, so the theorem fails."
+        print "The limit of u at a does not exist, so the conditions of the theorem are not met."
     
     # Combine graphs and plot them
     graph = graph_f + graph_u + graph_l + line_a
@@ -157,6 +157,6 @@ def squeeze( func = input_box( default = x^2*sin(1/x), label = "f(x) = ", width 
 </div>
 
 <hr>
-Last modified on July 17th, 2017.
+Last modified on July 18th, 2017.
 </body>
 </html>
