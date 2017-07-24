@@ -49,15 +49,15 @@ $(function () {
 # p slider - current best option
 
 @interact( layout=[ ['func', 'a'], ['u', 'l'], ['x_min', 'x_max', 'y_min', 'y_max'], ['p'] ])
-def squeeze( func = input_box( default = x^2*sin(1/x), label = "f(x) = ", width = 20 ), 
-        u = input_box( default = x^2, label = "u(x) = ", width = 20 ), 
-        l = input_box( default = -x^2, label = "l(x) = ", width = 20 ), 
+def squeeze( func = input_box( default = 2, label = "f(x) = ", width = 20 ), 
+        u = input_box( default = x^2 + 3, label = "u(x) = ", width = 20 ), 
+        l = input_box( default = -x^2 + 1, label = "l(x) = ", width = 20 ), 
         a = input_box( default = 0, label = "a", width = 5 ), 
         p = slider(0, 2, 0.01, default = 0.5, label = "p"),
-        x_min = input_box( default = -1, label = "x min", width = 5 ), 
-        x_max = input_box( default = 1, label = "x max", width = 5 ), 
-        y_min = input_box( default = -1, label = "y min", width = 5 ), 
-        y_max = input_box( default = 1, label = "y max", width = 5 ) ):
+        x_min = input_box( default = -2, label = "x min", width = 5 ), 
+        x_max = input_box( default = 2, label = "x max", width = 5 ), 
+        y_min = input_box( default = -2, label = "y min", width = 5 ), 
+        y_max = input_box( default = 6, label = "y max", width = 5 ) ):
     
     f(x) = func
             
@@ -103,7 +103,7 @@ def squeeze( func = input_box( default = x^2*sin(1/x), label = "f(x) = ", width 
                         pt = options[j]
                         try:
                             find_root( u-f + 10^-12, pt - 0.01, pt + 0.01 )
-                            print "f(x) <= u(x) is not always true for this p, so the theorem fails."
+                            pretty_print( "f(x) <= u(x) is not always true for this p, so the theorem fails." )
                             found_neg = True
                             break
                         except:
@@ -131,23 +131,23 @@ def squeeze( func = input_box( default = x^2*sin(1/x), label = "f(x) = ", width 
                             pt = options2[j]
                             try:
                                 find_root( f-l + 10^-12, pt - 0.01, pt + 0.01 )
-                                print "l(x) <= f(x) is not always true for this p, so the conditions of the theorem are not met."
+                                pretty_print( "l(x) <= f(x) is not always true for this p, so the theorem fails." )
                                 found_neg = True
                                 break
                             except:
                                 placeholder = True
                         
                         if not found_neg :
-                            print "The theorem holds true at this point."
+                            pretty_print( "The theorem holds true at this point." )
                       
                 else:
-                    print "The limit of f at a does not equal the other limits, so the conditions of the theorem are not met."     
+                    pretty_print( "The limit of f at a does not equal the other limits, so the theorem fails." )  
             else:
-                print "The limits of u and l at a are not equal, so the conditions of the theorem are not met."
+                pretty_print( "The limits of u and l at a are not equal, so the theorem fails." )
         else:
-            print "The limit of l at a does not exist, so the conditions of the theorem are not met."
+            pretty_print( "The limit of l at a does not exist, so the theorem fails." )
     else:
-        print "The limit of u at a does not exist, so the conditions of the theorem are not met."
+        pretty_print( "The limit of u at a does not exist, so the theorem fails." )
     
     # Combine graphs and plot them
     graph = graph_f + graph_u + graph_l + line_a
@@ -157,6 +157,6 @@ def squeeze( func = input_box( default = x^2*sin(1/x), label = "f(x) = ", width 
 </div>
 
 <hr>
-Last modified on July 18th, 2017.
+Last modified on July 24th, 2017.
 </body>
 </html>
