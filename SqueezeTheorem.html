@@ -34,11 +34,11 @@ $(function () {
 </script>
 
 <div class="latex">
-    \textrm{This demonstrates the Squeeze Theorem: If for functions } f, g, \textrm{ and } h \textrm{ and a positive number } p, 
+    \textrm{This demonstrates the Squeeze Theorem: If for functions } f, u, \textrm{ and } \ell \textrm{ and a positive number } p, 
     \\
-    g(x) \leq f(x) \leq h(x) \textrm{ for all } x \textrm{ that satisfy } 0 < |x-a| < p, 
+    u(x) \leq f(x) \leq \ell(x) \textrm{ for all } x \textrm{ that satisfy } 0 < |x-a| < p, 
     \\
-    \textrm{ and if } \lim_{x \rightarrow a } g(x) = \lim_{x \rightarrow a} h(x) = L, \textrm{ then } \lim_{x \rightarrow a } f(x) = L.
+    \textrm{ and if } \lim_{x \rightarrow a } u(x) = \lim_{x \rightarrow a} \ell(x) = L, \textrm{ then } \lim_{x \rightarrow a } f(x) = L.
 </div>
 
 <hr>
@@ -49,9 +49,9 @@ $(function () {
 # p slider - current best option
 
 @interact( layout=[ ['func', 'a'], ['u', 'l'], ['x_min', 'x_max', 'y_min', 'y_max'], ['p'] ])
-def squeeze( func = input_box( default = 2, label = "f(x) = ", width = 20 ), 
-        u = input_box( default = x^2 + 3, label = "u(x) = ", width = 20 ), 
-        l = input_box( default = -x^2 + 1, label = "l(x) = ", width = 20 ), 
+def squeeze( func = input_box( default = 2, label = "f(x)=", width = 15 ), 
+        u = input_box( default = x^2 + 3, label = "u(x)=", width = 15 ), 
+        l = input_box( default = -x^2 + 1, label = "$\ell(x)=$", width = 15 ), 
         a = input_box( default = 0, label = "a", width = 5 ), 
         p = slider(0, 2, 0.01, default = 0.5, label = "p"),
         x_min = input_box( default = -2, label = "x min", width = 5 ), 
@@ -157,6 +157,6 @@ def squeeze( func = input_box( default = 2, label = "f(x) = ", width = 20 ),
 </div>
 
 <hr>
-Last modified on July 25th, 2017.
+Last modified on July 28th, 2017.
 </body>
 </html>
